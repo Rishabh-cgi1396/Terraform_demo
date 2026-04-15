@@ -1,4 +1,4 @@
-name: Terraform Deploy
+name: Terraform Demo
 
 on:
   workflow_dispatch:
@@ -17,8 +17,6 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-
-      # ✅ Inject SSH key dynamically
       TF_VAR_ssh_public_key: ${{ secrets.SSH_PUBLIC_KEY }}
 
     steps:
@@ -32,7 +30,7 @@ jobs:
         run: terraform init
 
       - name: Plan
-        run: terraform plan -var-file=environments/${{ github.event.inputs.environment }}.tfvars
+        run: terraform plan -input=false -var-file=environments/${{ github.event.inputs.environment }}.tfvars
 
       - name: Apply
-        run: terraform apply -auto-approve -var-file=environments/${{ github.event.inputs.environment }}.tfvars
+        run: terraform apply -input=false -auto-approve -var-file=environments/${{ github.event.inputs.environment }}.tfvars
