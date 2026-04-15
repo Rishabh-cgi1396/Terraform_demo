@@ -1,6 +1,7 @@
 vm_name             = "dev-vm"
 location            = "Central India"
 resource_group_name = "vm-rg-dev"
+admin_username = "azureuser"
 
 vm_size = "Standard_B1s"
 
