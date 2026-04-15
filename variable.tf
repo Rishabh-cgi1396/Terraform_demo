@@ -3,12 +3,23 @@ variable "location" {}
 variable "resource_group_name" {}
 variable "subnet_id" {}
 
-variable "vm_size" {}
-variable "admin_username" {}
+variable "vm_size" {
+  default = "Standard_B1s"
+}
+
+variable "admin_username" {
+  default = "azureuser"
+}
+
 variable "ssh_public_key" {}
 
-variable "create_public_ip" {}
-variable "create_nsg" {}
+variable "create_public_ip" {
+  default = true
+}
+
+variable "create_nsg" {
+  default = true
+}
 
 variable "image" {
   type = object({
