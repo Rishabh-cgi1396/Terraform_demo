@@ -19,12 +19,3 @@ variable "create_public_ip" {
 variable "create_nsg" {
   default = true
 }
-
-variable "image" {
-  type = object({
-    publisher = string
-    offer     = string
-    sku       = string
-    version   = string
-  })
-}
