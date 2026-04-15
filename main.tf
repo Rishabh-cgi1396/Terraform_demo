@@ -7,32 +7,17 @@ terraform {
       version = "~> 3.100"
     }
   }
-
-  # ⚠️ OPTIONAL BUT STRONGLY RECOMMENDED
-  # Uncomment after creating storage account
-  # backend "azurerm" {
-  #   resource_group_name  = "tf-rg"
-  #   storage_account_name = "tfstate12345"
-  #   container_name       = "tfstate"
-  #   key                  = "terraform.tfstate"
-  # }
 }
 
 provider "azurerm" {
   features {}
 }
 
-# -------------------------------
-# Resource Group
-# -------------------------------
 resource "azurerm_resource_group" "rg" {
   name     = var.resource_group_name
   location = var.location
 }
 
-# -------------------------------
-# VNET + SUBNET
-# -------------------------------
 resource "azurerm_virtual_network" "vnet" {
   name                = "${var.vm_name}-vnet"
   location            = var.location
@@ -47,9 +32,6 @@ resource "azurerm_subnet" "subnet" {
   address_prefixes     = ["10.0.1.0/24"]
 }
 
-# -------------------------------
-# MODULE CALL
-# -------------------------------
 module "linux_vm" {
   source = "./modules/linux-vm"
 
@@ -58,9 +40,9 @@ module "linux_vm" {
   resource_group_name = azurerm_resource_group.rg.name
   subnet_id           = azurerm_subnet.subnet.id
 
-  vm_size         = var.vm_size
-  admin_username  = var.admin_username
-  ssh_public_key  = var.ssh_public_key
+  vm_size          = var.vm_size
+  admin_username   = var.admin_username
+  ssh_public_key   = var.ssh_public_key
   create_public_ip = var.create_public_ip
   create_nsg       = var.create_nsg
 
